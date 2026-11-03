@@ -79,7 +79,14 @@
       font-weight: 600;
       letter-spacing: .18em;
       text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
     }
+    h2::before, h2::after { content: ""; width: 24px; height: 2px; background: var(--accent); }
+    h2::before { transform: skewX(-40deg); }
+    h2::after { transform: skewX(40deg); }
     .games {
       list-style: none;
       padding: 0;
@@ -95,39 +102,59 @@
       justify-content: space-between;
       align-items: center;
       gap: 8px;
+      position: relative;
       background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 12px;
       text-align: left;
+      transition: border-color .2s;
     }
+    .games li::before, .games li::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border: 0 solid var(--accent);
+      transition: width .25s, height .25s;
+    }
+    .games li::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .games li::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+    .games li:hover::before, .games li:hover::after { width: 24px; height: 24px; }
     .games strong { font-size: 17px; }
     .badge {
       flex-shrink: 0;
-      padding: 2px 10px;
-      border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
-      border-radius: 999px;
+      padding: 3px 10px;
+      background: color-mix(in srgb, var(--accent) 16%, transparent);
       color: var(--accent);
-      font-size: 12px;
-      letter-spacing: .04em;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
     }
     .note { margin-top: 12px; color: var(--muted); font-size: 14px; }
     .reach { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 16px; margin-top: 14px; }
     .contact {
       display: inline-block;
       padding: 10px 24px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
+      border: 1px solid var(--fg);
+      background: var(--bg);
       text-decoration: none;
-      transition: border-color .2s, background .2s;
     }
-    .contact:hover, .contact:focus-visible { border-color: var(--accent); background: var(--card); }
+    .contact, .gh {
+      box-shadow: 4px 4px 0 -1px var(--bg), 4px 4px 0 0 var(--accent);
+      transition: box-shadow .2s, transform .2s, border-color .2s;
+    }
+    .contact:hover, .contact:focus-visible, .gh:hover, .gh:focus-visible {
+      transform: translate(2px, 2px);
+      box-shadow: 0 0 0 -1px var(--bg), 0 0 0 0 var(--accent);
+      border-color: var(--accent);
+    }
     .social { display: flex; justify-content: center; gap: 4px; }
     .social a {
       display: grid;
       place-items: center;
       width: 44px;
       height: 44px;
-      border-radius: 50%;
       color: var(--muted);
       transition: color .2s, background .2s;
     }
@@ -149,18 +176,14 @@
       align-items: center;
       gap: 8px;
       padding: 8px 14px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: color-mix(in srgb, var(--card) 80%, transparent);
-      backdrop-filter: blur(6px);
+      border: 1px solid var(--fg);
+      background: var(--bg);
       font-size: 14px;
       font-weight: 500;
       text-decoration: none;
-      transition: border-color .2s, color .2s;
     }
-    .gh:hover, .gh:focus-visible { border-color: var(--accent); }
     .gh svg { width: 18px; height: 18px; fill: currentColor; }
-    @media (prefers-reduced-motion: reduce) { .logo { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .logo { animation: none; } *, *::before, *::after { transition: none !important; } }
   </style>
 </head>
 <body>
